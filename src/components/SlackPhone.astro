@@ -1,0 +1,36 @@
+---
+/**
+ * Example screen: the approval request as a native-looking chat-app message in an #intake channel,
+ * with working Approve / Decline. Labeled "Example". Styled after common team-chat apps; no
+ * third-party logos are used.
+ */
+import { exampleIntake } from '../config/example';
+---
+
+<div class="screen screen--slack" data-ui data-attorney-phone>
+  <div class="slack__bar">
+    <span class="slack__back" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+    <div class="slack__title"><strong># intake</strong><small>Your firm</small></div>
+  </div>
+  <div class="slack__feed">
+    <span class="tag">Example</span>
+    <p class="slack__day"><span>Today</span></p>
+    <article class="slack__msg notify">
+      <span class="slack__avatar" aria-hidden="true">P</span>
+      <div class="slack__body">
+        <p class="slack__who"><strong>PracticeOp</strong> <span class="slack__app">APP</span> <time>11:44 PM</time></p>
+        <p class="slack__text"><strong>New intake for your approval</strong><br />{exampleIntake.caller}</p>
+        <dl class="slack__fields">
+          {exampleIntake.fields.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+        </dl>
+        <div class="choices slack__actions" role="group" aria-label="Example decision">
+          <button type="button" class="approve" data-choice="approve" aria-pressed="false">Approve</button>
+          <button type="button" class="decline" data-choice="decline" aria-pressed="false">Decline</button>
+        </div>
+        <p class="outcome slack__result" data-outcome="approve" aria-live="polite"><strong>Approved by you.</strong> {exampleIntake.approved}</p>
+        <p class="outcome slack__result" data-outcome="decline" aria-live="polite"><strong>Declined by you.</strong> {exampleIntake.declined}</p>
+      </div>
+    </article>
+  </div>
+  <div class="slack__composer" aria-hidden="true"><span>Message #intake</span></div>
+</div>

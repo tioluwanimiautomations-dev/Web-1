@@ -1,26 +1,35 @@
 ---
-/** Example screen: the text the attorney gets, with working Approve / Decline. Labeled "Example". */
+/**
+ * Example screen: the approval request as a native-looking text message thread, with working
+ * Approve / Decline replies. Labeled "Example".
+ */
+import { exampleIntake } from '../config/example';
 ---
 
-<div class="phone" data-ui data-attorney-phone>
-  <div class="phone__top"><span>Messages</span><span>11:44pm</span></div>
-  <span class="tag">Example</span>
-  <div class="bubble notify">
-    <strong>New intake for your approval</strong>
-    <dl>
-      <dt>Caller</dt><dd>Maria G., for her brother</dd>
-      <dt>Charge</dt><dd>DUI, first offense</dd>
-      <dt>County</dt><dd>Hillsborough</dd>
-      <dt>Custody</dt><dd>In custody, bond hearing pending</dd>
-      <dt>Found you</dt><dd>Google ad</dd>
-      <dt>Conflicts</dt><dd>No match found</dd>
-      <dt>Language</dt><dd>Spanish</dd>
-    </dl>
+<div class="screen screen--sms" data-ui data-attorney-phone>
+  <div class="sms__head">
+    <span class="sms__avatar" aria-hidden="true">P</span>
+    <strong>PracticeOp Intake</strong>
+    <small>Text Message &middot; Today 11:44 PM</small>
   </div>
-  <div class="choices" role="group" aria-label="Example decision">
-    <button type="button" class="approve" data-choice="approve" aria-pressed="false">Approve</button>
-    <button type="button" class="decline" data-choice="decline" aria-pressed="false">Decline</button>
+  <div class="sms__thread">
+    <span class="tag">Example</span>
+    <div class="sms__in notify">
+      <strong>New intake for your approval</strong><br />
+      Caller: {exampleIntake.caller}
+      {exampleIntake.fields.map(([k, v]) => <><br />{k}: {v}</>)}
+    </div>
+    <div class="choices sms__replies" role="group" aria-label="Example decision">
+      <button type="button" class="approve" data-choice="approve" aria-pressed="false">Approve</button>
+      <button type="button" class="decline" data-choice="decline" aria-pressed="false">Decline</button>
+    </div>
+    <div class="outcome sms__outcome" data-outcome="approve" aria-live="polite">
+      <p class="sms__out">Approve</p>
+      <p class="sms__in">{exampleIntake.approved}</p>
+    </div>
+    <div class="outcome sms__outcome" data-outcome="decline" aria-live="polite">
+      <p class="sms__out">Decline</p>
+      <p class="sms__in">{exampleIntake.declined}</p>
+    </div>
   </div>
-  <p class="outcome bubble bubble--out" data-outcome="approve" aria-live="polite"><strong>If you approve:</strong> consult booked on your calendar for Monday 9:00am, matter created, and Maria gets a confirmation text in Spanish.</p>
-  <p class="outcome bubble bubble--out" data-outcome="decline" aria-live="polite"><strong>If you decline:</strong> Maria gets a respectful text, in Spanish, that the firm can't take the matter. Nothing is booked.</p>
 </div>

@@ -114,6 +114,9 @@ document.querySelectorAll<HTMLElement>('[data-attorney-phone]').forEach((phone) 
   buttons.forEach((b) =>
     b.addEventListener('click', () => {
       outcomes.forEach((o) => (o.hidden = o.dataset.outcome !== b.dataset.choice));
+      // inside a scrolling app screen, bring the result into view like the app would
+      const pane = b.closest<HTMLElement>('.slack__feed, .mail__msg, .sms__thread');
+      if (pane) pane.scrollTo({ top: pane.scrollHeight, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
       buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     }),
   );
@@ -212,7 +215,7 @@ document.querySelectorAll<HTMLElement>('[data-walk]').forEach((section) => {
   window.addEventListener('resize', schedule);
 });
 
-/* ---------- hero deck: the example call plays once, then the text arrives ----------
+/* ---------- hero deck: the approval arrives in each app, once ----------
  * Phones see the two screens as a swipe deck with two tabs; desktop sees them side by side.
  * Without JavaScript, or with reduced motion, every line is simply there.
  */
@@ -244,44 +247,77 @@ document.querySelectorAll<HTMLElement>('[data-deck]').forEach((deck) => {
   const cards = Array.from(deck.querySelectorAll<HTMLElement>('.door'));
   const tabs = Array.from(deck.querySelectorAll<HTMLButtonElement>('[data-deck-tab]'));
   const caller = deck.querySelector<HTMLElement>('[data-caller-phone]');
-  const attorney = deck.querySelector<HTMLElement>('[data-attorney-phone]');
+  const inboxes = Array.from(deck.querySelectorAll<HTMLElement>('[data-attorney-phone]'));
   if (!track || cards.length < 2) return;
 
-  const isDeck = () => track.scrollWidth > track.clientWidth + 8;
+  const offset = (i: number) => cards[i].offsetLeft - cards[0].offsetLeft;
+  const goTo = (i: number) => track.scrollTo({ left: offset(i), behavior: reduceMotion.matches ? 'auto' : 'smooth' });
   const setTab = (i: number) => tabs.forEach((t, j) => t.setAttribute('aria-pressed', String(i === j)));
-  const goTo = (i: number) =>
-    track.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
 
-  let touched = false;
-  ['pointerdown', 'touchstart', 'wheel'].forEach((type) => track.addEventListener(type, () => (touched = true), { passive: true }));
+  // which tab is lit follows the scroll, except right after a tap (the last card can't scroll to the left edge)
+  let pinnedTab = -1;
+  let pinTimer = 0;
   track.addEventListener(
     'scroll',
     () => {
-      const step = cards[1].offsetLeft - cards[0].offsetLeft;
-      setTab(Math.round(track.scrollLeft / step) > 0 ? 1 : 0);
+      if (pinnedTab >= 0) return;
+      const step = offset(1) || 1;
+      setTab(Math.max(0, Math.min(cards.length - 1, Math.round(track.scrollLeft / step))));
     },
     { passive: true },
   );
+
+  let touched = false;
+  const arriveAll = () => inboxes.forEach((el) => el.classList.add('arrived'));
+  const markTouched = () => {
+    touched = true;
+    arriveAll();
+    caller?.querySelectorAll('.seq').forEach((el) => el.classList.add('on'));
+    caller?.querySelector('.typing')?.classList.remove('show');
+  };
+  ['pointerdown', 'touchstart', 'wheel'].forEach((type) => track.addEventListener(type, markTouched, { passive: true }));
   tabs.forEach((t, i) =>
     t.addEventListener('click', () => {
-      touched = true;
+      markTouched();
+      pinnedTab = i;
+      setTab(i);
+      window.clearTimeout(pinTimer);
+      pinTimer = window.setTimeout(() => (pinnedTab = -1), 900);
       goTo(i);
     }),
   );
 
-  if (reduceMotion.matches || !('IntersectionObserver' in window) || !caller || !attorney) return;
-  caller.classList.add('is-seq');
-  attorney.classList.add('is-seq');
+  if (reduceMotion.matches || !('IntersectionObserver' in window)) return;
+  caller?.classList.add('is-seq');
+  inboxes.forEach((el) => el.classList.add('is-seq'));
+
+  // the call timer ticks while the transcript plays
+  const timer = caller?.querySelector<HTMLElement>('[data-call-timer]');
+  let seconds = 38;
 
   const play = async () => {
-    await wait(500);
-    await playCaller(caller);
-    await wait(900);
-    if (isDeck() && !touched) {
-      goTo(1);
-      await wait(450);
+    const tick = window.setInterval(() => {
+      seconds += 1;
+      if (timer) timer.textContent = Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2, '0');
+    }, 1000);
+    await wait(caller ? 500 : 300);
+    if (caller) await playCaller(caller);
+    window.clearInterval(tick);
+    for (let i = 0; i < inboxes.length && !touched; i++) {
+      await wait(i === 0 ? (caller ? 900 : 200) : 2200);
+      if (touched) break;
+      const card = inboxes[i].closest<HTMLElement>('.door');
+      const index = card ? cards.indexOf(card) : -1;
+      // scroll only if that phone isn't already fully on screen
+      if (index > 0) {
+        const left = card!.offsetLeft - track.scrollLeft - cards[0].offsetLeft;
+        if (left < 0 || left + card!.offsetWidth > track.clientWidth - cards[0].offsetLeft + 1) {
+          goTo(index);
+          await wait(450);
+        }
+      }
+      inboxes[i].classList.add('arrived');
     }
-    attorney.classList.add('arrived');
   };
   const io = new IntersectionObserver(
     (entries) => {
@@ -290,9 +326,10 @@ document.querySelectorAll<HTMLElement>('[data-deck]').forEach((deck) => {
         play();
       }
     },
-    { threshold: 0.3 },
+    { threshold: 0.55 },
   );
-  io.observe(track);
+  // start when the first phone is mostly on screen, so the visitor actually sees it play
+  io.observe(cards[0]);
 });
 
 /* ---------- sticky booking bar (phones) ----------

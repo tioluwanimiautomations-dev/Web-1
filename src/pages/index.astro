@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CallerPhone from '../components/CallerPhone.astro';
-import AttorneyPhone from '../components/AttorneyPhone.astro';
+import SlackPhone from '../components/SlackPhone.astro';
+import EmailPhone from '../components/EmailPhone.astro';
+import DeviceFrame from '../components/DeviceFrame.astro';
 import CloseCTA from '../components/CloseCTA.astro';
 import { siteConfig } from '../config/site';
 import { url } from '../utils/url';
@@ -34,17 +35,17 @@ const slipRows = [
       </div>
       <div class="deck" data-deck>
         <div class="deck__tabs" role="group" aria-label="Example screens">
-          <button type="button" data-deck-tab="0" aria-pressed="true">The call</button>
-          <button type="button" data-deck-tab="1" aria-pressed="false">Your text</button>
+          <button type="button" data-deck-tab="0" aria-pressed="true">Slack</button>
+          <button type="button" data-deck-tab="1" aria-pressed="false">Email</button>
         </div>
         <div class="doors" data-deck-track>
           <figure class="door">
-            <CallerPhone />
-            <figcaption><strong>The 11:40pm call</strong><span>Answered in the caller's language.</span></figcaption>
+            <DeviceFrame time="11:44" theme="slack"><SlackPhone /></DeviceFrame>
+            <figcaption><strong>In Slack</strong><span>Approve or decline from the channel.</span></figcaption>
           </figure>
           <figure class="door">
-            <AttorneyPhone />
-            <figcaption><strong>The text you get</strong><span>Tap Approve or Decline.</span></figcaption>
+            <DeviceFrame time="11:44" theme="mail"><EmailPhone /></DeviceFrame>
+            <figcaption><strong>By email</strong><span>The same decision in your inbox.</span></figcaption>
           </figure>
         </div>
       </div>

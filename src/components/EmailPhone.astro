@@ -1,0 +1,38 @@
+---
+/**
+ * Example screen: the approval request as a native-looking mail app message, with working
+ * Approve / Decline. Labeled "Example".
+ */
+import { exampleIntake } from '../config/example';
+---
+
+<div class="screen screen--mail" data-ui data-attorney-phone>
+  <div class="mail__bar" aria-hidden="true">
+    <span class="mail__back"><svg viewBox="0 0 24 24"><path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>Inbox</span>
+    <span class="mail__nav"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+  </div>
+  <article class="mail__msg notify">
+    <span class="tag">Example</span>
+    <p class="mail__subject">New intake for your approval: DUI, Hillsborough</p>
+    <div class="mail__from">
+      <span class="mail__avatar" aria-hidden="true">P</span>
+      <div><strong>PracticeOp Intake</strong><small>To: you &middot; 11:44 PM</small></div>
+    </div>
+    <p class="mail__text">An after-hours caller is waiting for your decision.</p>
+    <dl class="mail__fields">
+      {exampleIntake.fields.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+    </dl>
+    <div class="choices mail__actions" role="group" aria-label="Example decision">
+      <button type="button" class="approve" data-choice="approve" aria-pressed="false">Approve</button>
+      <button type="button" class="decline" data-choice="decline" aria-pressed="false">Decline</button>
+    </div>
+    <p class="outcome mail__result" data-outcome="approve" aria-live="polite"><strong>Approved.</strong> {exampleIntake.approved}</p>
+    <p class="outcome mail__result" data-outcome="decline" aria-live="polite"><strong>Declined.</strong> {exampleIntake.declined}</p>
+  </article>
+  <div class="mail__toolbar" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M3 7h18M9 7V4h6v3m-9 0 1 13h10l1-13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+    <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 6l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+    <svg viewBox="0 0 24 24"><path d="M10 8 5 12l5 4M5 12h9a5 5 0 0 1 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    <svg viewBox="0 0 24 24"><path d="M4 20l1-4L16 5l3 3L8 19l-4 1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+  </div>
+</div>

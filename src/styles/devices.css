@@ -1,0 +1,172 @@
+/* ===========================================================
+   Example devices: plain phones running native-looking apps.
+   These are interface fragments (data-ui): they keep the look of the
+   apps they show, not the PracticeOp palette. Every one is labeled "Example".
+   =========================================================== */
+
+:root {
+  --sys: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---------- the phone ---------- */
+.device {
+  background: #0c0c0d; border-radius: 46px; padding: 9px;
+  box-shadow: 0 0 0 1px #2c2c2e, 0 28px 50px -24px rgba(19, 32, 27, .45); /* taste-skill-ignore: device bezel */
+}
+.device__screen { position: relative; height: 600px; border-radius: 38px; overflow: hidden; display: flex; flex-direction: column; font-family: var(--sys); }
+.device__status { flex: none; display: flex; align-items: center; justify-content: space-between; height: 42px; padding: 0 22px 0 30px; font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+.device__island { width: 88px; height: 26px; border-radius: 20px; background: #000; }
+.device__icons { display: flex; align-items: center; gap: 5px; }
+.device__icons svg { fill: currentColor; }
+.device__screen--call { background: #1c1c1e; color: #fff; }
+.device__screen--slack { background: #3f0e40; color: #fff; }
+.device__screen--mail, .device__screen--sms { background: #fff; color: #000; }
+.device .screen { flex: 1; min-height: 0; border-radius: 0; }
+
+/* ---------- any example screen ---------- */
+.screen { position: relative; display: flex; flex-direction: column; overflow: hidden; border-radius: 18px; font-family: var(--sys); font-size: 15px; line-height: 1.35; }
+.screen p { margin: 0; }
+.screen dl, .screen dd { margin: 0; }
+.screen .tag { align-self: flex-start; font-family: var(--body); font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 999px; background: #efeff4; color: #3c3c43; }
+.screen .tag--dark { background: rgba(255, 255, 255, .16); color: #fff; }
+.screen button { font-family: var(--sys); }
+.choices button { cursor: pointer; transition: transform .14s var(--ease), filter .18s var(--ease); }
+.choices button:hover { filter: brightness(.96); }
+.choices button:active { transform: scale(.97); }
+.choices button[aria-pressed="true"] { outline: 3px solid currentColor; outline-offset: 2px; }
+.js .outcome[hidden] { display: none; }
+
+/* ---------- call screen ---------- */
+.screen--call { background: #1c1c1e; color: #fff; padding: 8px 16px 18px; gap: 10px; }
+.screen--call .tag { align-self: center; }
+.call__head { text-align: center; }
+.call__who { font-size: 26px; font-weight: 400; letter-spacing: -.02em; }
+.call__meta { margin-top: 2px; font-size: 14px; color: rgba(235, 235, 245, .62); font-variant-numeric: tabular-nums; }
+.lang { align-self: center; display: inline-flex; gap: 4px; padding: 3px; border-radius: 999px; background: rgba(255, 255, 255, .12); }
+.lang button { border: 0; background: transparent; color: #fff; padding: 6px 14px; min-height: 36px; border-radius: 999px; cursor: pointer; font-size: 14px; transition: background-color .18s var(--ease), color .18s var(--ease); }
+.lang button[aria-pressed="true"] { background: #fff; color: #000; }
+.call__transcript { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 6px; }
+.call__speaker { font-size: 13px; color: rgba(235, 235, 245, .62); margin-top: 4px; }
+.call__speaker--caller { align-self: flex-end; }
+.call__line { max-width: 92%; padding: 9px 12px; border-radius: 16px 16px 16px 4px; background: rgba(255, 255, 255, .11); }
+.call__line--caller { align-self: flex-end; background: #3a3a3c; border-radius: 16px 16px 4px 16px; }
+.call__note { margin-top: auto; font-size: 13px; color: rgba(235, 235, 245, .62); }
+.call__controls { flex: none; display: flex; justify-content: space-between; padding: 6px 6px 0; }
+.call__controls span { width: 54px; height: 54px; border-radius: 50%; background: rgba(255, 255, 255, .15); display: grid; place-items: center; }
+.call__controls svg { width: 24px; height: 24px; fill: #fff; }
+.call__controls .call__end { background: #ff3b30; }
+
+/* typing dots, laid over the transcript so nothing shifts */
+.typing { position: absolute; left: 0; display: none; gap: 4px; margin: 0; padding: 12px 14px; border-radius: 16px 16px 16px 4px; background: rgba(255, 255, 255, .11); }
+.typing.out { left: auto; right: 0; background: #3a3a3c; border-radius: 16px 16px 4px 16px; }
+.typing.show { display: inline-flex; }
+.typing i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, .8); animation: dot 1s infinite ease-in-out; }
+.typing i:nth-child(2) { animation-delay: .15s; }
+.typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 80%, 100% { opacity: .35; transform: none; } 40% { opacity: 1; transform: translateY(-3px); } }
+
+/* ---------- team chat screen ---------- */
+.screen--slack { background: #fff; color: #1d1c1d; }
+.slack__bar { flex: none; display: flex; align-items: center; gap: 10px; padding: 4px 14px 12px; background: #3f0e40; color: #fff; }
+.slack__back svg { width: 22px; height: 22px; }
+.slack__title strong { display: block; font-size: 16px; font-weight: 700; }
+.slack__title small { font-size: 13px; opacity: .78; }
+.slack__feed > * { flex: none; }
+.slack__feed { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 8px; padding: 10px 14px 12px; overflow-y: auto; scrollbar-width: none; }
+.slack__feed::-webkit-scrollbar, .mail__msg::-webkit-scrollbar, .sms__thread::-webkit-scrollbar { display: none; }
+.slack__day { align-self: center; font-size: 13px; font-weight: 700; color: #616061; background: #f8f8f8; padding: 2px 12px; border-radius: 999px; }
+.slack__msg { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 9px; font-size: 14px; }
+.slack__avatar { width: 34px; height: 34px; border-radius: 8px; background: #2b2b2e; color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 17px; }
+.slack__who { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.slack__who strong { font-weight: 800; }
+.slack__app { font-size: 11px; font-weight: 700; color: #616061; background: #ebebeb; padding: 1px 4px; border-radius: 3px; vertical-align: 1px; }
+.slack__who time { font-size: 13px; color: #616061; }
+.slack__text { margin-top: 2px; }
+.slack__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; margin-top: 6px; padding-left: 10px; box-shadow: inset 4px 0 0 #dddddd; } /* taste-skill-ignore: chat attachment bar */
+.slack__fields dt { font-size: 13px; font-weight: 700; }
+.slack__fields dd { font-size: 13.5px; line-height: 1.3; }
+.slack__actions { display: flex; gap: 8px; margin-top: 10px; }
+.slack__actions button { min-height: 40px; padding: 7px 16px; border-radius: 6px; font-size: 15px; font-weight: 700; background: #fff; color: #1d1c1d; border: 1px solid rgba(29, 28, 29, .3); } /* taste-skill-ignore: native button */
+.slack__actions .approve { background: #007a5a; border-color: #007a5a; color: #fff; }
+.slack__actions .decline { color: #c4164f; }
+.slack__result { margin-top: 10px; font-size: 14px; background: #f8f8f8; padding: 8px 10px; border-radius: 6px; }
+.slack__composer { flex: none; margin: 0 12px 16px; padding: 11px 12px; border-radius: 10px; font-size: 15px; color: #616061; box-shadow: inset 0 0 0 1px #dddddd; } /* taste-skill-ignore: native input */
+
+/* ---------- mail screen ---------- */
+.screen--mail { background: #fff; color: #000; }
+.mail__bar { flex: none; display: flex; align-items: center; justify-content: space-between; padding: 2px 10px 8px 6px; color: #0066d6; font-size: 17px; }
+.mail__back { display: flex; align-items: center; }
+.mail__back svg { width: 26px; height: 26px; }
+.mail__nav { display: flex; gap: 14px; }
+.mail__nav svg { width: 24px; height: 24px; }
+.mail__msg { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 9px; padding: 2px 16px 12px; overflow-y: auto; scrollbar-width: none; }
+.mail__msg > * { flex: none; }
+.mail__subject { margin: 0; font-family: var(--sys); font-size: 18px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
+.mail__from { display: flex; align-items: center; gap: 10px; }
+.mail__avatar { width: 36px; height: 36px; border-radius: 50%; background: #8e8e93; color: #fff; display: grid; place-items: center; font-weight: 600; }
+.mail__from strong { display: block; font-size: 15px; }
+.mail__from small { font-size: 13px; color: #6c6c70; }
+.mail__fields { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 12px; font-size: 13.5px; background: #f2f2f7; padding: 10px 12px; border-radius: 10px; }
+.mail__fields div { display: contents; }
+.mail__fields dt { color: #6c6c70; }
+.mail__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mail__actions button { min-height: 42px; border: 0; border-radius: 10px; font-size: 15px; font-weight: 600; background: #e5e5ea; color: #000; }
+.mail__actions .approve { background: #0066d6; color: #fff; }
+.mail__result { font-size: 14px; background: #f2f2f7; padding: 8px 10px; border-radius: 10px; }
+.mail__toolbar { flex: none; display: flex; justify-content: space-around; padding: 8px 0 16px; background: #f9f9f9; color: #0066d6; }
+.mail__toolbar svg { width: 24px; height: 24px; }
+
+/* ---------- text message screen ---------- */
+.screen--sms { background: #fff; color: #000; }
+.sms__head { flex: none; text-align: center; padding: 14px 12px 10px; background: #f6f6f6; }
+.sms__avatar { width: 44px; height: 44px; margin: 0 auto 4px; border-radius: 50%; background: #8e8e93; color: #fff; display: grid; place-items: center; font-weight: 600; font-size: 19px; }
+.sms__head strong { display: block; font-size: 14px; font-weight: 600; }
+.sms__head small { display: block; font-size: 13px; color: #6c6c70; }
+.sms__thread { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 8px; padding: 12px; overflow-y: auto; scrollbar-width: none; }
+.sms__thread > * { flex: none; }
+.sms__in { align-self: flex-start; max-width: 88%; padding: 8px 12px; border-radius: 18px 18px 18px 6px; background: #e9e9eb; color: #000; }
+.sms__out { align-self: flex-end; padding: 8px 14px; border-radius: 18px 18px 6px 18px; background: #0066d6; color: #fff; }
+.sms__replies { display: flex; justify-content: flex-end; gap: 8px; }
+.sms__replies button { min-height: 38px; padding: 6px 16px; border-radius: 999px; font-size: 15px; font-weight: 600; background: #fff; color: #0066d6; box-shadow: inset 0 0 0 1.5px #0066d6; border: 0; } /* taste-skill-ignore: native button */
+.sms__outcome { display: flex; flex-direction: column; gap: 8px; }
+
+/* ---------- captured fields card (How it works) ---------- */
+.screen--fields { background: var(--bg); padding: 14px 16px; gap: 10px; font-size: 14px; }
+.screen--fields dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 14px; }
+.screen--fields dt { color: #6c6c70; }
+
+/* ---------- play-once motion ---------- */
+.js .screen.is-seq .seq { opacity: 0; transform: translateY(8px) scale(.98); transition: opacity .35s var(--ease), transform .35s var(--ease); }
+.js .screen.is-seq .seq.on { opacity: 1; transform: none; }
+.js .screen.is-seq .notify { opacity: 0; transform: translateY(-22px) scale(.96); transition: opacity .45s var(--ease), transform .55s cubic-bezier(.2, 1.3, .4, 1); }
+.js .screen.is-seq.arrived .notify { opacity: 1; transform: none; }
+.js .screen.is-seq .choices { opacity: 0; transition: opacity .4s var(--ease) .3s; }
+.js .screen.is-seq.arrived .choices { opacity: 1; }
+.screen.arrived .choices button { animation: nudge .6s var(--ease) .6s both; }
+.screen.arrived .choices .decline { animation-delay: .75s; }
+@keyframes nudge { 50% { transform: scale(1.05); } }
+
+/* ---------- the hero deck: three phones you can swipe ---------- */
+.deck { min-width: 0; }
+.deck__tabs { display: none; }
+.js .deck__tabs { display: inline-flex; gap: 4px; margin-bottom: 18px; padding: 4px; border-radius: 999px; background: var(--surface); }
+.deck__tabs button { border: 0; background: transparent; min-height: 40px; padding: 8px 18px; border-radius: 999px; font-size: var(--step-small); font-weight: 500; cursor: pointer; transition: background-color .2s var(--ease), color .2s var(--ease); }
+.deck__tabs button[aria-pressed="true"] { background: var(--green); color: var(--on-green); }
+.doors {
+  position: relative; display: flex; gap: 24px; width: calc(300px * 2 + 24px); max-width: 100%;
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain;
+  padding: 4px 0 10px;
+}
+.doors::-webkit-scrollbar { display: none; }
+.door { flex: 0 0 300px; min-width: 0; scroll-snap-align: start; }
+@media (max-width: 1100px) { .deck { margin-top: 48px; } }
+@media (max-width: 680px) {
+  .deck { margin-top: 36px; }
+  .doors { width: calc(100% + var(--gut) * 2); max-width: none; gap: 14px; margin: 0 calc(var(--gut) * -1); padding: 4px var(--gut) 10px; scroll-padding-inline: var(--gut); }
+  .door { flex-basis: 84%; }
+  .device__screen { height: 600px; }
+}
+
+/* ---------- inside the How it works cards ---------- */
+.walk__card .screen { box-shadow: 0 0 0 1px rgba(0, 0, 0, .08); } /* taste-skill-ignore: screen edge */
+@media (min-width: 681px) { .js .deck__tabs { display: none; } }
