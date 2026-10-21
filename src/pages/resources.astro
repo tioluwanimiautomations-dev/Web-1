@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { url } from '../utils/url';
+
+/**
+ * Free resources. No pitch and no email gate on this page (brief 4.4).
+ * Set `live: true` and a `href` once the founder marks an item live.
+ */
+const resources = [
+  { title: 'Flat-Fee Real Hourly Rate Calculator', body: 'A Google Sheet. Enter your flat fees and the hours a case really takes, and see what you earn per hour. Make a copy to use it.', live: false },
+  { title: 'Partner Week Audit', body: "A Google Sheet for logging where a partner's week actually goes.", live: false },
+  { title: 'Client update text pack', body: 'Text messages for each case stage, in English and Spanish.', live: false },
+  { title: 'Safe AI prompts for non-client work', body: "Prompts for a defense firm's marketing and admin work, with the relevant parts of ABA Formal Opinion 512 quoted.", live: false },
+  { title: 'Payment plan risk calculator and reminder texts', body: 'A sheet for weighing installment plans, plus reminder texts for each payment.', live: false, wide: true },
+];
+---
+
+<BaseLayout
+  title="Free resources for criminal defense firms"
+  description="Free spreadsheets and text templates for criminal defense firms. No email required."
+  pitch={false}
+>
+  <PageHero title="Free resources" lead="For the whole firm. No email, no login. Open it, make a copy, use it." />
+
+  <section class="sec wrap" aria-label="Resources">
+    <ul class="resources">
+      {resources.map((r) => (
+        <li class:list={['rv', { wide: r.wide }]}>
+          <h2>{r.title}</h2>
+          <p>{r.body}</p>
+          <p class="status">Coming soon &middot; <Placeholder>Google Sheet / Doc URL</Placeholder></p>
+        </li>
+      ))}
+    </ul>
+    <p style="margin-top:48px">Made by Stephen Adeniji, PracticeOp. Questions or want a second pair of eyes on your numbers? <a href={url('/book#contact')}>Get in touch</a>.</p>
+  </section>
+  <div style="height:var(--gap-section)"></div>
+</BaseLayout>

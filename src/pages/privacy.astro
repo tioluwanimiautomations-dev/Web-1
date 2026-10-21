@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { url } from '../utils/url';
+---
+
+<BaseLayout title="Privacy policy" description="Privacy policy for the PracticeOp website.">
+  <PageHero title="Privacy policy">
+    <p class="small" style="margin-top:16px"><Placeholder>founder or lawyer to review</Placeholder></p>
+  </PageHero>
+  <section class="sec wrap prose">
+    <p>This policy covers this website. How the intake system handles a firm's data is set out on the <a href={url('/data-and-privacy')}>data and privacy page</a> and in each firm's agreement.</p>
+    <h2>What this site collects</h2>
+    <p>This site has no contact forms, no tracking pixels and no session recording. If you book a call, the booking tool collects your name, email and any notes you add. If you email PracticeOp, your message and address are kept to reply to you.</p>
+    <h2>Analytics</h2>
+    <p><Placeholder>none, or a privacy-light tool such as Plausible or Fathom, founder to confirm</Placeholder></p>
+    <h2>Sharing</h2>
+    <p>PracticeOp does not sell personal information. Booking details are shared only with the scheduling provider that runs the booking.</p>
+    <h2>Your choices</h2>
+    <p>You can ask for a copy of what PracticeOp holds about you, or ask for it to be deleted, by email: <Placeholder>contact email</Placeholder>.</p>
+    <h2>Changes</h2>
+    <p>Updates are posted on this page with a new date. Last updated <Placeholder>date of review</Placeholder>.</p>
+  </section>
+  <div style="height:var(--gap-section)"></div>
+</BaseLayout>

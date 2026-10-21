@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Walkthrough from '../components/Walkthrough.astro';
+import Placeholder from '../components/Placeholder.astro';
+import CloseCTA from '../components/CloseCTA.astro';
+---
+
+<BaseLayout
+  title="How the intake system works"
+  description="One after-hours DUI arrest call followed from the first ring to the attorney's Approve or Decline text."
+>
+  <PageHero
+    title="How the intake system works"
+    lead="Every call, web form and ad lead takes the same path: answered, captured, conflict-screened, and put in front of the attorney to approve."
+  />
+
+  <Walkthrough />
+
+  <section class="sec wrap" aria-labelledby="fields-title">
+    <h2 id="fields-title" class="rv">What gets captured</h2>
+    <div class="index rv" style="--d:60ms">
+      <div><h3>The caller</h3><ul><li>Name</li><li>Callback number</li><li>Relationship to the accused</li><li>Preferred language</li></ul></div>
+      <div><h3>The matter</h3><ul><li>Charge</li><li>County</li><li>Custody status</li><li>Upcoming hearing, if known</li></ul></div>
+      <div><h3>The source</h3><ul><li>How they found the firm</li><li>Which ad, form or page</li><li>Call, web form or ad lead</li></ul></div>
+    </div>
+  </section>
+
+  <section class="sec wrap split" aria-labelledby="forms-title">
+    <h2 id="forms-title" class="rv">Web forms and ad leads</h2>
+    <div class="split__body">
+      <p class="rv" style="--d:60ms">The Sunday web form and the ad lead that would sit until Monday go through the same path: captured, conflict-screened, texted to the attorney for Approve or Decline.</p>
+    </div>
+  </section>
+
+  <section class="sec wrap split" aria-labelledby="pm-title">
+    <h2 id="pm-title" class="rv">Practice management</h2>
+    <div class="split__body">
+      <p class="rv" style="--d:60ms">Connects to Clio first. MyCase and PracticePanther next. Other systems use a manual approval path.</p>
+      <p class="small rv" style="--d:120ms"><Placeholder>VERIFY before launch: only list systems that are live</Placeholder></p>
+    </div>
+  </section>
+
+  <section class="field on-green" aria-labelledby="keep-title">
+    <div class="wrap split">
+      <h2 id="keep-title" class="rv">What the firm keeps</h2>
+      <div class="split__body">
+        <p class="statement rv" style="--d:60ms">Its own phone number, website and calendar. Nothing is replaced.</p>
+      </div>
+    </div>
+  </section>
+
+  <CloseCTA />
+</BaseLayout>

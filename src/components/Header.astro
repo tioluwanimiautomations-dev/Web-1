@@ -1,0 +1,33 @@
+---
+import { mainNav } from '../config/navigation';
+import { siteConfig } from '../config/site';
+import { url } from '../utils/url';
+import { ariaCurrent } from '../utils/nav';
+
+interface Props {
+  /** Hide the booking button (the free resources page carries no pitch). */
+  pitch?: boolean;
+}
+
+const { pitch = true } = Astro.props;
+const path = Astro.url.pathname;
+---
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <div class="hdr__in">
+      <a href={url('/')} class="brand" translate="no">PracticeOp<span class="sr-only"> home</span></a>
+      <nav class="mainnav" aria-label="Main">
+        <ul>
+          {mainNav.map((item) => (
+            <li><a href={url(item.href)} aria-current={ariaCurrent(item, path)}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+      {pitch && <a href={url(siteConfig.cta.href)} class="btn btn--sm">{siteConfig.cta.label}</a>}
+      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mob">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>

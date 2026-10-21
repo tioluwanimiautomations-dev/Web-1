@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { siteConfig } from '../config/site';
+---
+
+<BaseLayout
+  title={siteConfig.cta.label}
+  description="Book a 25-minute intake audit with Stephen Adeniji: how after-hours calls, forms and ad leads are handled at your firm today."
+>
+  <PageHero
+    title={siteConfig.cta.label}
+    lead="A look at how calls, forms and ad leads are handled after hours at your firm today, and whether it's worth fixing."
+  />
+
+  <section class="sec wrap split" id="schedule" aria-labelledby="sched-title">
+    <h2 id="sched-title">Pick a time</h2>
+    <div class="split__body">
+      {siteConfig.bookingUrl ? (
+        <div class="scheduler"><iframe src={siteConfig.bookingUrl} title="Booking calendar" loading="lazy"></iframe></div>
+      ) : (
+        <div class="scheduler">
+          <p><Placeholder>booking URL. Founder must confirm cal.com/practiceop/audit or Calendly</Placeholder></p>
+          <p class="muted small">The scheduler appears here once the booking link is set in src/config/site.ts.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="sec wrap split" aria-labelledby="call-title">
+    <h2 id="call-title">What happens on the call</h2>
+    <div class="split__body">
+      <p>The call walks through what happens today when a call, a web form or an ad lead comes in after hours. Who answers, how fast, and where it gets written down.</p>
+      <p>At the end you'll know whether there's anything worth fixing. If there isn't, that's the answer.</p>
+    </div>
+  </section>
+
+  <section class="sec wrap split" id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Email</h2>
+    <div class="split__body">
+      {siteConfig.email ? <p><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p> : <p><Placeholder>contact email</Placeholder></p>}
+    </div>
+  </section>
+</BaseLayout>

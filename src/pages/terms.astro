@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Placeholder from '../components/Placeholder.astro';
+---
+
+<BaseLayout title="Terms of use" description="Terms of use for the PracticeOp website.">
+  <PageHero title="Terms of use">
+    <p class="small" style="margin-top:16px"><Placeholder>founder or lawyer to review</Placeholder></p>
+  </PageHero>
+  <section class="sec wrap prose">
+    <p>These terms cover use of this website. Work for a firm is governed by that firm's own agreement with PracticeOp.</p>
+    <h2>Not legal advice</h2>
+    <p>Nothing on this site is legal advice. The free resources are general templates. Check them against your own practice and your state's rules before use.</p>
+    <h2>Examples</h2>
+    <p>Screens and calls shown on this site are labeled examples. They are not real clients or real calls.</p>
+    <h2>Free resources</h2>
+    <p>You may copy and adapt the free resources for use inside your firm. Please don't resell them.</p>
+    <h2>Liability</h2>
+    <p>The site and resources are provided as they are, without warranties. <Placeholder>limitation of liability wording, lawyer to supply</Placeholder></p>
+    <h2>Contact</h2>
+    <p><Placeholder>contact email</Placeholder></p>
+  </section>
+  <div style="height:var(--gap-section)"></div>
+</BaseLayout>

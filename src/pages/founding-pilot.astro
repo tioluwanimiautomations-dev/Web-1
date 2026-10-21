@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Placeholder from '../components/Placeholder.astro';
+import CloseCTA from '../components/CloseCTA.astro';
+---
+
+<BaseLayout
+  title="Founding firm pilot"
+  description="A 30-day live pilot of the full intake system for criminal defense firms in Florida and Texas, with a refund guarantee tied to qualified after-hours leads captured."
+>
+  <PageHero
+    title="Founding firm pilot"
+    lead="A 30-day live pilot of the full intake system, for a small number of criminal defense firms in Florida and Texas."
+  >
+    <p style="margin-top:16px">Fees and the monthly rate are covered on the call, not on this site.</p>
+  </PageHero>
+
+  <section class="sec wrap split" aria-labelledby="terms-title">
+    <h2 id="terms-title" class="rv">The terms</h2>
+    <dl class="terms split__body rv" style="--d:60ms">
+      <div><dt>The pilot</dt><dd><p>30 days, live, on your real calls, forms and ad leads.</p></dd></div>
+      <div><dt>The guarantee</dt><dd><p>Full refund of the pilot fee if fewer than 5 qualified after-hours leads are captured in 30 days.</p><p>Misses caused by the intake system itself count against PracticeOp.</p></dd></div>
+      <div><dt>Qualified lead</dt><dd><p>A new prospect with a criminal matter in the firm's state or counties, with name, number and charge captured, conflict-screened, and delivered to the attorney within 5 minutes.</p></dd></div>
+      <div><dt>After-hours</dt><dd><p>Outside the firm's documented staffed hours, or unanswered after 4 rings or 20 seconds.</p></dd></div>
+      <div><dt>After the pilot</dt><dd><p>Month-to-month.</p></dd></div>
+      <div><dt>Founding rate</dt><dd><p>Founding firms lock their monthly rate for 12 months. The rate covers the systems that follow intake: court-date and deadline tracking, then payment plans.</p></dd></div>
+      <div><dt>Slots</dt><dd><p><Placeholder>3 or 5, founder to confirm</Placeholder> founding slots across Florida and Texas.</p><p>Founding slots close on 15 December 2026.</p></dd></div>
+    </dl>
+  </section>
+
+  <section class="field on-green" aria-labelledby="g-title">
+    <div class="wrap split">
+      <h2 id="g-title" class="rv">What the guarantee covers</h2>
+      <div class="split__body">
+        <p class="statement rv" style="--d:60ms">Leads captured. Not cases signed, retainers won or fees earned. Whether a lead becomes a client is the attorney's decision.</p>
+      </div>
+    </div>
+  </section>
+
+  <CloseCTA line="Twenty-five minutes to see whether your firm is a fit for a founding slot." />
+</BaseLayout>

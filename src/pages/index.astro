@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CallerPhone from '../components/CallerPhone.astro';
+import AttorneyPhone from '../components/AttorneyPhone.astro';
+import CloseCTA from '../components/CloseCTA.astro';
+import { siteConfig } from '../config/site';
+import { url } from '../utils/url';
+---
+
+<BaseLayout>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero__grid">
+      <h1 id="hero-title">Criminal defense firms run on voicemail, paper and guesswork.</h1>
+      <div class="hero__sub">
+        <p class="lead">I build the AI systems that replace them. Starting with intake: every call answered in English and Spanish, every signed case traced to its ad.</p>
+        <a class="btn" href={url(siteConfig.cta.href)}>{siteConfig.cta.label}</a>
+      </div>
+      <div class="doors">
+        <figure class="door">
+          <CallerPhone />
+          <figcaption><strong>The 11:40pm call</strong><span>Answered in the caller's language.</span></figcaption>
+        </figure>
+        <figure class="door">
+          <AttorneyPhone />
+          <figcaption><strong>The text you get</strong><span>Tap Approve or Decline.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+    <p class="wrap nojs-note">Both outcomes are shown above. Nothing is booked until the attorney approves.</p>
+  </section>
+
+  <section class="wrap split" aria-labelledby="problem-title">
+    <h2 id="problem-title" class="rv">What happens after 5pm today</h2>
+    <div class="split__body">
+      <ol class="problems rv" style="--d:60ms">
+        <li>After 5pm the phone goes to voicemail.</li>
+        <li>The answering service takes a message. Nobody calls back before the family hires someone else.</li>
+        <li>You can't tell which ad actually signed a retainer.</li>
+      </ol>
+      <p class="rv" style="--d:120ms;margin-top:24px">Arrests don't happen during office hours. A family calling from the jail lobby at 11pm calls the next firm on Google if voicemail picks up.</p>
+    </div>
+  </section>
+
+  <div class="slip-band">
+    <section class="wrap slip-grid" aria-labelledby="does-title">
+      <div class="rv">
+        <h2 id="does-title">What it does</h2>
+        <p>The same path for every call, web form and ad lead. It answers, captures what you need, checks for conflicts and asks you. You decide.</p>
+        <p><a href={url('/how-it-works')}>Walk through one call end to end</a></p>
+      </div>
+      <div class="slip rv" style="--d:80ms" data-ui>
+        <p class="slip__label">Example: a DUI arrest call at 11:40pm on a Saturday.</p>
+        <h3>The call</h3>
+        <div class="row"><span>Answers in English, switches to Spanish</span><span>11:40pm</span></div>
+        <div class="row"><span>Captures charge, county, custody status</span><span>11:41pm</span></div>
+        <h3>Before you see it</h3>
+        <div class="row"><span>Conflict screen against your client list</span><span>11:43pm</span></div>
+        <div class="row"><span>Texts you Approve / Decline</span><span>11:44pm</span></div>
+        <h3>Your answer</h3>
+        <div class="row"><span>Approve: consult booked, matter created</span><span>your call</span></div>
+        <div class="row"><span>Decline: caller gets a respectful text</span><span>your call</span></div>
+        <div class="row row--final"><span>A booked consult, or a polite no</span><span>Saturday night</span></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="sec wrap split" aria-labelledby="control-title">
+    <h2 id="control-title" class="rv">You stay in control</h2>
+    <div class="split__body">
+      <p class="lead rv" style="--d:60ms">The attorney approves every booking. Nothing lands on your calendar without your yes.</p>
+      <p class="rv" style="--d:120ms">The intake system never gives legal advice. It never decides whether to take a case. It collects the facts, checks for conflicts and puts the decision in front of you.</p>
+    </div>
+  </section>
+
+  <section class="sec wrap split" aria-labelledby="lang-title">
+    <h2 id="lang-title" class="rv">English and Spanish</h2>
+    <div class="split__body">
+      <p class="rv" style="--d:60ms">Bilingual intake is built in, not an add-on. The caller picks the language by speaking it. You get the summary in English.</p>
+      <div class="bilingual rv" style="--d:120ms">
+        <figure><figcaption>Example greeting, English</figcaption><blockquote>Thank you for calling. Who am I speaking with?</blockquote></figure>
+        <figure lang="es"><figcaption lang="en">Example greeting, Spanish</figcaption><blockquote>Gracias por llamar. ¿Con quién hablo?</blockquote></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="field on-green" aria-labelledby="mixed-title">
+    <div class="wrap split">
+      <h2 id="mixed-title" class="rv">Mixed practice?</h2>
+      <div class="split__body">
+        <p class="statement rv" style="--d:60ms">We build criminal intake. PI and family callers get routed and tagged, never qualified.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" aria-labelledby="next-title">
+    <h2 id="next-title" class="rv">Early, and open about it</h2>
+    <div class="pair rv" style="--d:60ms">
+      <div>
+        <h3>Founding firm pilot</h3>
+        <p>A 30-day live pilot of the full intake system, with a refund guarantee tied to leads captured. Limited founding slots in Florida and Texas.</p>
+        <p><a href={url('/founding-pilot')}>Read the pilot terms</a></p>
+      </div>
+      <div>
+        <h3>Free resources</h3>
+        <p>Spreadsheets and text templates for the whole firm. No email required, no login.</p>
+        <p><a href={url('/resources')}>See the free resources</a></p>
+      </div>
+    </div>
+  </section>
+
+  <CloseCTA line="Twenty-five minutes on how your after-hours calls, forms and ad leads are handled today, and whether it is worth fixing." />
+</BaseLayout>

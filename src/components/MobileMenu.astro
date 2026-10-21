@@ -1,0 +1,24 @@
+---
+import { mainNav } from '../config/navigation';
+import { siteConfig } from '../config/site';
+import { url } from '../utils/url';
+import { ariaCurrent } from '../utils/nav';
+
+interface Props {
+  pitch?: boolean;
+}
+
+const { pitch = true } = Astro.props;
+const path = Astro.url.pathname;
+---
+
+<div class="mob" id="mob" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <button class="mob__x" id="mobX" type="button" aria-label="Close menu">&times;</button>
+  <nav class="mob__nav" aria-label="Mobile">
+    {mainNav.map((item) => (
+      <a href={url(item.href)} aria-current={ariaCurrent(item, path)}>{item.label}</a>
+    ))}
+    {!pitch && <a href={url('/book#contact')}>Contact</a>}
+  </nav>
+  {pitch && <a href={url(siteConfig.cta.href)} class="btn">{siteConfig.cta.label}</a>}
+</div>

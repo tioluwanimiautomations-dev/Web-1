@@ -1,0 +1,70 @@
+---
+/**
+ * One call, end to end, as a pinned stage: while the section is pinned, four example cards take
+ * turns, and the matching step number lights up. Motion ported and toned down from Lapse
+ * (agnilem/lapse-astro, MIT, src/scripts/fx/step-scroll.js). On phones, with reduced motion or
+ * without JavaScript the cards simply stack.
+ */
+import CallerPhone from './CallerPhone.astro';
+import AttorneyPhone from './AttorneyPhone.astro';
+
+const steps = ['The call', 'What gets captured', 'Conflict screen', 'Your answer'];
+---
+
+<section class="walk sec" data-walk aria-labelledby="walk-title">
+  <div class="wrap walk__stage">
+    <div>
+      <h2 id="walk-title">One call, end to end</h2>
+      <p class="lead">Example: a DUI arrest call at 11:40pm on a Saturday.</p>
+      <p class="muted">Every screen here is labeled as an example. None of it is a real client's call.</p>
+    </div>
+    <div class="walk__box">
+      <div class="walk__slides">
+        <article class="walk__slide" data-slide>
+          <div class="walk__card">
+            <h3>The call</h3>
+            <p>The firm's own number rings. The intake system answers in English and switches to Spanish if the caller does. It never gives legal advice or promises representation.</p>
+            <CallerPhone />
+          </div>
+        </article>
+        <article class="walk__slide" data-slide style="opacity:0">
+          <div class="walk__card">
+            <h3>What gets captured</h3>
+            <p>Name, callback number, charge, county, custody status, any upcoming hearing, and how they found the firm: which ad, form or page.</p>
+            <div class="phone" data-ui>
+              <span class="tag">Example</span>
+              <div class="bubble"><dl>
+                <dt>Name</dt><dd>Maria G.</dd>
+                <dt>Callback</dt><dd>On file</dd>
+                <dt>Charge</dt><dd>DUI, first offense</dd>
+                <dt>County</dt><dd>Hillsborough</dd>
+                <dt>Custody</dt><dd>In custody</dd>
+                <dt>Hearing</dt><dd>Bond hearing pending</dd>
+                <dt>Source</dt><dd>Google ad</dd>
+              </dl></div>
+            </div>
+          </div>
+        </article>
+        <article class="walk__slide" data-slide style="opacity:0">
+          <div class="walk__card">
+            <h3>Conflict screen</h3>
+            <p>Before you see anything, the intake system checks your own practice management system for a possible conflict. Only the result is stored.</p>
+            <p>If the check fails, the lead is marked &ldquo;conflict check pending&rdquo; and you clear it before approving. A failed check never counts as &ldquo;no conflict&rdquo;.</p>
+          </div>
+        </article>
+        <article class="walk__slide" data-slide style="opacity:0">
+          <div class="walk__card">
+            <h3>Your answer</h3>
+            <p>One text, two choices. Approve books the consult and creates the matter. Decline sends the caller a polite text. Nothing is booked without your yes.</p>
+            <AttorneyPhone />
+          </div>
+        </article>
+      </div>
+      <ol class="walk__nums" aria-hidden="true">
+        {steps.map((_, i) => (
+          <li class="walk__num"><span class="idle">{i + 1}</span><span class="on" data-num style={i ? 'opacity:0' : undefined}>{i + 1}</span></li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

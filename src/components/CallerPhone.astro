@@ -1,0 +1,19 @@
+---
+/** Example screen: the 11:40pm call, with a working English / Spanish switch. Labeled "Example". */
+---
+
+<div class="phone" data-ui data-caller-phone>
+  <div class="phone__top"><span>Call to your firm's number</span><span>11:40pm</span></div>
+  <span class="tag">Example</span>
+  <div class="lang" role="group" aria-label="Greeting language">
+    <button type="button" data-lang="en" aria-pressed="true">English</button>
+    <button type="button" data-lang="es" aria-pressed="false">Español</button>
+  </div>
+  <p class="speaker">Your firm answers</p>
+  <p class="bubble" data-greet="en">Thank you for calling the law firm. I can take down what happened and get it to the attorney tonight. Who am I speaking with?</p>
+  <p class="bubble" data-greet="es" lang="es">Gracias por llamar al bufete. Puedo tomar los datos de lo que pasó y hacérselos llegar al abogado esta noche. ¿Con quién hablo?</p>
+  <p class="speaker">Caller</p>
+  <p class="bubble bubble--out" data-greet="en">My brother was arrested tonight. They said DUI. He's at the county jail.</p>
+  <p class="bubble bubble--out" data-greet="es" lang="es">Arrestaron a mi hermano esta noche. Dijeron que por DUI. Está en la cárcel del condado.</p>
+  <p class="speaker" style="margin-top:auto !important">The call continues: name, callback number, charge, county, custody status, how they found you.</p>
+</div>

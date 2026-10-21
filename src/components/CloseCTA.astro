@@ -1,0 +1,20 @@
+---
+import { siteConfig } from '../config/site';
+import { url } from '../utils/url';
+
+interface Props {
+  line?: string;
+}
+
+const { line = 'Twenty-five minutes on how your after-hours calls, forms and ad leads are handled today.' } = Astro.props;
+---
+
+<section class="close" aria-label="Book an intake audit">
+  <div class="wrap split">
+    <div aria-hidden="true"></div>
+    <div class="split__body">
+      <p class="close__line rv">{line}</p>
+      <a class="btn rv" style="--d:80ms" href={url(siteConfig.cta.href)}>{siteConfig.cta.label}</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Placeholder from '../components/Placeholder.astro';
+import CloseCTA from '../components/CloseCTA.astro';
+import { siteConfig } from '../config/site';
+import { url } from '../utils/url';
+---
+
+<BaseLayout
+  title="About Stephen Adeniji"
+  description="Why PracticeOp builds for criminal defense firms, why intake comes first, and how the founding pilot works."
+>
+  <PageHero title="About PracticeOp" lead="PracticeOp is new. I'm taking on its first firms now." />
+
+  <section class="sec wrap split" aria-label="A note from Stephen">
+    <div class="portrait rv"><Placeholder>founder headshot, a real photo</Placeholder></div>
+    <div class="split__body">
+      <p class="lead rv">I build AI and operations systems for criminal defense firms, and only criminal defense firms.</p>
+      <p class="rv">Why criminal defense: the client calls when something has just gone wrong. An arrest at 11pm, a family member calling from a jail lobby, a bond hearing in the morning. If voicemail picks up, the family calls the next firm on Google.</p>
+      <p class="rv">Why intake first: it is where the money leaks and where nobody can see it. A missed Saturday call never shows up in a report. Intake is also where a firm can finally see which ad signed a retainer, because the system is in the call.</p>
+      <p class="rv">What comes next: court-date and deadline tracking, then payment plans. Founding firms get those under the rate they lock in.</p>
+      <p class="rv">How the founding pilot works: 30 days, live, on your real calls, with a refund if the intake system doesn't capture at least 5 qualified after-hours leads. <a href={url('/founding-pilot')}>The full terms are here.</a></p>
+      <p class="sign rv">{siteConfig.founder.name}</p>
+      <p class="muted small rv">Founder, PracticeOp &middot; <a href={siteConfig.founder.linkedin} rel="noopener">LinkedIn</a></p>
+    </div>
+  </section>
+
+  <CloseCTA />
+</BaseLayout>

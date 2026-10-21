@@ -1,0 +1,26 @@
+---
+/** Example screen: the text the attorney gets, with working Approve / Decline. Labeled "Example". */
+---
+
+<div class="phone" data-ui data-attorney-phone>
+  <div class="phone__top"><span>Messages</span><span>11:44pm</span></div>
+  <span class="tag">Example</span>
+  <div class="bubble">
+    <strong>New intake for your approval</strong>
+    <dl>
+      <dt>Caller</dt><dd>Maria G., for her brother</dd>
+      <dt>Charge</dt><dd>DUI, first offense</dd>
+      <dt>County</dt><dd>Hillsborough</dd>
+      <dt>Custody</dt><dd>In custody, bond hearing pending</dd>
+      <dt>Found you</dt><dd>Google ad</dd>
+      <dt>Conflicts</dt><dd>No match found</dd>
+      <dt>Language</dt><dd>Spanish</dd>
+    </dl>
+  </div>
+  <div class="choices" role="group" aria-label="Example decision">
+    <button type="button" class="approve" data-choice="approve" aria-pressed="false">Approve</button>
+    <button type="button" class="decline" data-choice="decline" aria-pressed="false">Decline</button>
+  </div>
+  <p class="outcome bubble bubble--out" data-outcome="approve" aria-live="polite"><strong>If you approve:</strong> consult booked on your calendar for Monday 9:00am, matter created, and Maria gets a confirmation text in Spanish.</p>
+  <p class="outcome bubble bubble--out" data-outcome="decline" aria-live="polite"><strong>If you decline:</strong> Maria gets a respectful text, in Spanish, that the firm can't take the matter. Nothing is booked.</p>
+</div>

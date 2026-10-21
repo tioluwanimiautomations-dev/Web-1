@@ -1,0 +1,40 @@
+/* ===========================================================
+   PracticeOp design tokens. White pages, one deep green.
+   Change the palette, type and layout scale here.
+   =========================================================== */
+
+:root {
+  /* colour: one ground, one ink, one accent */
+  --bg: #FFFFFF;
+  --surface: #F2F5F3;
+  --surface-2: #E4EBE7;
+  --ink: #13201B;
+  --muted: #4A5752;
+  --green: #1E4D3B;
+  --green-hover: #173D2F;
+  --on-green: #FFFFFF;
+  --on-green-muted: #C9D8D1;
+  --mark: #FFF1B8;
+  --mark-ink: #3D2E00;
+
+  /* type: self-hosted variable fonts */
+  --display: 'Outfit Variable', 'Outfit', system-ui, sans-serif;
+  --body: 'Inter Tight Variable', 'Inter Tight', system-ui, -apple-system, sans-serif;
+
+  --step-small: 0.9375rem;
+  --step-body: clamp(1.0625rem, 1rem + 0.2vw, 1.125rem);
+  --step-lead: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --step-head: clamp(1.75rem, 1.35rem + 1.5vw, 2.5rem);
+  --step-display: clamp(2rem, 1.1rem + 3.6vw, 4.5rem);
+
+  /* layout */
+  --wrap: 84rem;
+  --gut: 32px;
+  --gap-section: clamp(96px, 11vw, 168px);
+  --radius: 10px;
+  --ease: cubic-bezier(.22, .68, .16, 1);
+}
+
+@media (max-width: 820px) {
+  :root { --gut: 20px; }
+}

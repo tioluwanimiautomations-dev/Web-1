@@ -1,0 +1,21 @@
+---
+import Placeholder from './Placeholder.astro';
+import { siteConfig } from '../config/site';
+import { footerNav, legalLinks } from '../config/navigation';
+import { url } from '../utils/url';
+---
+
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <span>PracticeOp. Intake systems for criminal defense firms.</span>
+    <nav aria-label="Footer">
+      {footerNav.map((l) => <a href={url(l.href)}>{l.label}</a>)}
+      <a href={url(siteConfig.cta.href)}>{siteConfig.cta.label}</a>
+    </nav>
+    <span class="ftr__end">
+      &copy; {new Date().getFullYear()} PracticeOp
+      {legalLinks.map((l) => <> &middot; <a href={url(l.href)}>{l.label}</a></>)}
+    </span>
+    <p class="ftr__note">Mailing address: <Placeholder>mailing address, only once the founder confirms it is live</Placeholder></p>
+  </div>
+</footer>
