@@ -1,10 +1,10 @@
 {
-  "name": "st-ai-agency",
+  "name": "practiceop-website",
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "ST AI Agency — a free Astro theme for AI agencies, AI automation studios and AI agent platforms.",
-  "author": "StrivioThemes",
+  "description": "PracticeOp website: intake system for criminal defense firms.",
+  "author": "PracticeOp",
   "license": "MIT",
   "keywords": [
     "astro",
