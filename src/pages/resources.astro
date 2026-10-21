@@ -26,8 +26,8 @@ const resources = [
 
   <section class="sec wrap" aria-label="Resources">
     <ul class="resources">
-      {resources.map((r) => (
-        <li class:list={['rv', { wide: r.wide }]}>
+      {resources.map((r, i) => (
+        <li class:list={['rv', 'card', { wide: r.wide }]} style={'--d:' + i * 80 + 'ms'}>
           <h2>{r.title}</h2>
           <p>{r.body}</p>
           <p class="status">Coming soon &middot; <Placeholder>Google Sheet / Doc URL</Placeholder></p>

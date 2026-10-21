@@ -57,7 +57,7 @@ dl, dd { margin: 0; }
 .split > h2 { max-width: 14ch; }
 .split__body { max-width: 40rem; }
 @media (max-width: 900px) {
-  .split { grid-template-columns: 1fr; }
+  .split { grid-template-columns: minmax(0, 1fr); }
   .split > h2 { margin-bottom: .7em; max-width: none; }
 }
 
@@ -90,7 +90,7 @@ dl, dd { margin: 0; }
 .js .rv.in { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; transition-delay: 0ms !important; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0ms !important; transition-duration: .001ms !important; transition-delay: 0ms !important; }
   .js .rv { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }

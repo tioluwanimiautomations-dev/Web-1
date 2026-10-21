@@ -1,0 +1,13 @@
+---
+/**
+ * Phones only: the one call to action pinned to the bottom of the screen. It slides up once the
+ * page's top section has scrolled away and slides off while the closing call to action or the
+ * footer is on screen. Hidden (and out of the tab order) whenever it is off screen.
+ */
+import { siteConfig } from '../config/site';
+import { url } from '../utils/url';
+---
+
+<div class="sticky-cta" data-sticky-cta inert>
+  <a class="btn" href={url(siteConfig.cta.href)}>{siteConfig.cta.label}</a>
+</div>

@@ -15,8 +15,8 @@ const path = Astro.url.pathname;
 <div class="mob" id="mob" role="dialog" aria-modal="true" aria-label="Menu" hidden>
   <button class="mob__x" id="mobX" type="button" aria-label="Close menu">&times;</button>
   <nav class="mob__nav" aria-label="Mobile">
-    {mainNav.map((item) => (
-      <a href={url(item.href)} aria-current={ariaCurrent(item, path)}>{item.label}</a>
+    {mainNav.map((item, i) => (
+      <a href={url(item.href)} aria-current={ariaCurrent(item, path)} style={'--i:' + i}>{item.label}</a>
     ))}
     {!pitch && <a href={url('/book#contact')}>Contact</a>}
   </nav>

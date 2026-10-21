@@ -2,8 +2,8 @@
 /**
  * One call, end to end, as a pinned stage: while the section is pinned, four example cards take
  * turns, and the matching step number lights up. Motion ported and toned down from Lapse
- * (agnilem/lapse-astro, MIT, src/scripts/fx/step-scroll.js). On phones, with reduced motion or
- * without JavaScript the cards simply stack.
+ * (agnilem/lapse-astro, MIT, src/scripts/fx/step-scroll.js). On phones the cards become a swipe
+ * carousel with a step bar; with reduced motion on desktop, or without JavaScript, they stack.
  */
 import CallerPhone from './CallerPhone.astro';
 import AttorneyPhone from './AttorneyPhone.astro';
@@ -18,8 +18,14 @@ const steps = ['The call', 'What gets captured', 'Conflict screen', 'Your answer
       <p class="lead">Example: a DUI arrest call at 11:40pm on a Saturday.</p>
       <p class="muted">Every screen here is labeled as an example. None of it is a real client's call.</p>
     </div>
+    <div class="walk__steps" role="group" aria-label="Steps">
+      {steps.map((label, i) => (
+        <button type="button" data-step-btn={i} aria-pressed={i === 0 ? 'true' : 'false'}><span>{i + 1}</span> {label}</button>
+      ))}
+      <i class="walk__bar" aria-hidden="true"><b data-step-bar></b></i>
+    </div>
     <div class="walk__box">
-      <div class="walk__slides">
+      <div class="walk__slides" data-slides>
         <article class="walk__slide" data-slide>
           <div class="walk__card">
             <h3>The call</h3>

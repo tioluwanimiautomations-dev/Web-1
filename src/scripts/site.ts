@@ -1,6 +1,6 @@
 /**
  * PracticeOp site-wide behaviour (vanilla).
- * Mobile menu · scroll reveal · example phones · pinned walkthrough
+ * Mobile menu · scroll reveal · example phones and hero deck · walkthrough · sticky booking bar
  * Based on ST AI Agency (StrivioThemes, MIT).
  */
 
@@ -96,7 +96,14 @@ document.querySelectorAll<HTMLElement>('[data-caller-phone]').forEach((phone) =>
     phone.querySelectorAll<HTMLElement>('[data-greet]').forEach((el) => (el.hidden = el.dataset.greet !== lang));
     buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
   };
-  buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.lang ?? 'en')));
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      show(b.dataset.lang ?? 'en');
+      // switching language mid-playback simply shows the whole call
+      phone.querySelectorAll('.seq').forEach((el) => el.classList.add('on'));
+      phone.querySelector('.typing')?.classList.remove('show');
+    }),
+  );
   show('en');
 });
 
@@ -140,6 +147,31 @@ document.querySelectorAll<HTMLElement>('[data-walk]').forEach((section) => {
   const nums = Array.from(section.querySelectorAll<HTMLElement>('[data-num]'));
   if (!stage || !slides.length) return;
   const count = slides.length;
+
+  // phones: swipe carousel with a step bar
+  const track = section.querySelector<HTMLElement>('[data-slides]');
+  const stepBtns = Array.from(section.querySelectorAll<HTMLButtonElement>('[data-step-btn]'));
+  const stepBar = section.querySelector<HTMLElement>('[data-step-bar]');
+  const setStep = (i: number) => {
+    stepBtns.forEach((b, j) => b.setAttribute('aria-pressed', String(i === j)));
+    if (stepBar) stepBar.style.transform = 'scaleX(' + (i + 1) / count + ')';
+  };
+  if (track) {
+    track.addEventListener(
+      'scroll',
+      () => {
+        if (section.classList.contains('is-pinned')) return;
+        const step = slides[1] ? slides[1].offsetLeft - slides[0].offsetLeft : track.clientWidth;
+        setStep(Math.max(0, Math.min(count - 1, Math.round(track.scrollLeft / step))));
+      },
+      { passive: true },
+    );
+    stepBtns.forEach((b, i) =>
+      b.addEventListener('click', () =>
+        track.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: reduceMotion.matches ? 'auto' : 'smooth' }),
+      ),
+    );
+  }
   const tracks = slides.map((_, i) => {
     const first = i === 0;
     const last = i === count - 1;
@@ -179,3 +211,115 @@ document.querySelectorAll<HTMLElement>('[data-walk]').forEach((section) => {
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', schedule);
 });
+
+/* ---------- hero deck: the example call plays once, then the text arrives ----------
+ * Phones see the two screens as a swipe deck with two tabs; desktop sees them side by side.
+ * Without JavaScript, or with reduced motion, every line is simply there.
+ */
+const wait = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
+
+async function playCaller(phone: HTMLElement) {
+  const typing = phone.querySelector<HTMLElement>('.typing');
+  for (const el of Array.from(phone.querySelectorAll<HTMLElement>('.seq'))) {
+    if (el.classList.contains('on')) continue;
+    if (el.hidden) {
+      el.classList.add('on');
+      continue;
+    }
+    const isBubble = el.classList.contains('bubble');
+    if (isBubble && typing) {
+      typing.classList.toggle('out', el.classList.contains('bubble--out'));
+      typing.style.top = el.offsetTop + 'px';
+      typing.classList.add('show');
+      await wait(750);
+      typing.classList.remove('show');
+    }
+    el.classList.add('on');
+    await wait(isBubble ? 500 : 220);
+  }
+}
+
+document.querySelectorAll<HTMLElement>('[data-deck]').forEach((deck) => {
+  const track = deck.querySelector<HTMLElement>('[data-deck-track]');
+  const cards = Array.from(deck.querySelectorAll<HTMLElement>('.door'));
+  const tabs = Array.from(deck.querySelectorAll<HTMLButtonElement>('[data-deck-tab]'));
+  const caller = deck.querySelector<HTMLElement>('[data-caller-phone]');
+  const attorney = deck.querySelector<HTMLElement>('[data-attorney-phone]');
+  if (!track || cards.length < 2) return;
+
+  const isDeck = () => track.scrollWidth > track.clientWidth + 8;
+  const setTab = (i: number) => tabs.forEach((t, j) => t.setAttribute('aria-pressed', String(i === j)));
+  const goTo = (i: number) =>
+    track.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+
+  let touched = false;
+  ['pointerdown', 'touchstart', 'wheel'].forEach((type) => track.addEventListener(type, () => (touched = true), { passive: true }));
+  track.addEventListener(
+    'scroll',
+    () => {
+      const step = cards[1].offsetLeft - cards[0].offsetLeft;
+      setTab(Math.round(track.scrollLeft / step) > 0 ? 1 : 0);
+    },
+    { passive: true },
+  );
+  tabs.forEach((t, i) =>
+    t.addEventListener('click', () => {
+      touched = true;
+      goTo(i);
+    }),
+  );
+
+  if (reduceMotion.matches || !('IntersectionObserver' in window) || !caller || !attorney) return;
+  caller.classList.add('is-seq');
+  attorney.classList.add('is-seq');
+
+  const play = async () => {
+    await wait(500);
+    await playCaller(caller);
+    await wait(900);
+    if (isDeck() && !touched) {
+      goTo(1);
+      await wait(450);
+    }
+    attorney.classList.add('arrived');
+  };
+  const io = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        io.disconnect();
+        play();
+      }
+    },
+    { threshold: 0.3 },
+  );
+  io.observe(track);
+});
+
+/* ---------- sticky booking bar (phones) ----------
+ * Shows once the page's first call to action (or the page hero) has scrolled away,
+ * hides while the closing call to action or the footer is on screen.
+ */
+const stickyBar = document.querySelector<HTMLElement>('[data-sticky-cta]');
+if (stickyBar && 'IntersectionObserver' in window) {
+  const top = document.querySelector<HTMLElement>('main .hero .btn, main .phero');
+  const ends = document.querySelectorAll<HTMLElement>('.close, .ftr');
+  let topVisible = !!top;
+  const endsVisible = new Set<Element>();
+  const sync = () => {
+    const show = !topVisible && endsVisible.size === 0;
+    stickyBar.classList.toggle('show', show);
+    stickyBar.toggleAttribute('inert', !show);
+  };
+  if (top) {
+    new IntersectionObserver((entries) => {
+      topVisible = entries[0].isIntersecting || entries[0].boundingClientRect.top > 0;
+      sync();
+    }).observe(top);
+  }
+  const endIo = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? endsVisible.add(e.target) : endsVisible.delete(e.target)));
+    sync();
+  });
+  ends.forEach((el) => endIo.observe(el));
+  sync();
+}

@@ -36,5 +36,5 @@
 }
 
 @media (max-width: 820px) {
-  :root { --gut: 20px; }
+  :root { --gut: 20px; --gap-section: 72px; }
 }
